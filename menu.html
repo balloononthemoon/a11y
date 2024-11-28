@@ -111,7 +111,8 @@
         const activeElement = document.activeElement.tagName.toLowerCase();
         const menu = parentElement.querySelector('menu');
         if(keyName === 'escape' && menu.getAttribute('aria-hidden') != 'true'){
-            doToggleMenu(parentElement, '')
+            doToggleMenu(parentElement, '');
+            parentElement.querySelector('button').focus();
         }
         if(keyName === 'arrowdown'){
             if(activeElement === 'button'){
