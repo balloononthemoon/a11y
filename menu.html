@@ -1,0 +1,104 @@
+<style type="text/css">
+    html,body{
+        font-family: "Comic Sans MS";
+    }
+    a{
+        text-decoration: none;
+    }
+    .nodisplay{
+        display: none !important;
+    }
+
+    menu{
+        padding-left: 0;
+    }
+    menu.level0{
+        display: flex;
+        flex-flow: row;
+        flex-wrap: wrap;
+    }
+
+    menu.level0 > li{
+        display: flex;
+        justify-content: center;
+        position: relative;
+    }
+    menu.level1{
+        display: block;
+        position: absolute;
+        top: 25px;
+        left: 10px;
+    }
+
+    li{
+        list-style-type: none;
+        padding: 0 10px;
+    }
+
+    button.expander{
+        margin:0 5px;
+        transform: rotate(90deg);
+    }
+
+    button.expander.opened{
+        transform: rotate(270deg);
+    }
+
+</style>
+
+<nav aria-label="Main Navigation">
+    <menu class="navmenu level0">
+        <li><a href="/">Home</a></li>
+        <li class="has-submenu" aria-description="has-submenu">
+            <a href="/about" class="submenu" aria-haspopup="true">About Us</a>
+            <button class="expander" aria-expanded="false">&#10148;</button>
+            <menu aria-hidden="true" aria-expanded="false" class="navmenu level1 nodisplay">
+                <li><a href="/about/history">History</a></li>
+                <li><a href="/about/leadership">Leadership</a></li>
+                <li><a href="/about/mission">Mission & Values</a></li>
+                <li><a href="/about/accreditation">Accredication</a></li>
+            </menu>
+        </li>
+        <li><a href="/academics">Academics</a></li>
+        <li><a href="/admissions">Admissions</a></li>
+        <li><a href="/research">Research</a></li>
+        <li><a href="/alumni">Alumni</a></li>
+        <li><a href="/contact">Contact Us</a></li>
+    </menu>
+</nav>
+
+<script type="text/javascript">
+    console.log("HELLO")
+    const submenus = document.querySelectorAll('.has-submenu');
+    submenus.forEach((item) => {
+        const anchor = item.querySelector("& > a");
+        const button = item.querySelector('button.expander');
+        anchor.addEventListener('mouseover', toggleMenu);
+        anchor.addEventListener('mouseout', toggleMenu);
+        button.addEventListener('click', toggleMenu);
+    })
+
+    function toggleMenu(e){
+        const el = e.target.parentElement;
+        const menu = el.querySelector('menu');
+        const button = el.querySelector('button.expander');
+
+        const hidden = menu.getAttribute('aria-hidden') == 'true';
+        if(e.type === 'mouseover' && !hidden){
+            return;
+        }
+        console.log("TOGGLE MENU", e.type, hidden);
+        menu.setAttribute('aria-hidden', menu.getAttribute('aria-hidden') == 'true' ? false:true)
+        menu.setAttribute('aria-expanded', menu.getAttribute('aria-expanded') == 'true' ? false:true)
+
+        if(hidden){
+            menu.classList.remove('nodisplay');
+            button.classList.add('opened');
+        }else{
+            menu.classList.add('nodisplay');
+            button.classList.remove('opened');
+        }
+    }
+
+</script>
+
