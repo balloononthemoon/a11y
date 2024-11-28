@@ -51,8 +51,8 @@
         <li><a href="/">Home</a></li>
         <li class="has-submenu" aria-description="has-submenu">
             <a id="about-us-link" href="/about" class="submenu">About Us</a>
-            <button class="expander" aria-expanded="false" aria-controls="about-submenu" aria-labelledby="about-us-link">&#10148;</button>
-            <menu id="about-submenu" aria-hidden="true" class="navmenu level1 nodisplay">
+            <button class="expander" aria-expanded="false" aria-controls="about-submenu" aria-labelledby="about-us-link" tabindex="0">&#10148;</button>
+            <menu id="about-submenu" aria-hidden="true" class="navmenu level1 nodisplay" tabindex="0">
                 <li><a href="/about/history">History</a></li>
                 <li><a href="/about/leadership">Leadership</a></li>
                 <li><a href="/about/mission">Mission & Values</a></li>
@@ -75,6 +75,7 @@
         anchor.addEventListener('mouseover', toggleMenu);
         anchor.addEventListener('mouseout', toggleMenu);
         button.addEventListener('click', toggleMenu);
+        document.addEventListener("keyup", (e) => {submenuControl(e, item)});
     })
 
     function toggleMenu(e) {
@@ -97,8 +98,6 @@
         if(hidden){
             menu.classList.remove('nodisplay');
             button.classList.add('opened');
-            menu.querySelector('li').focus();
-            document.addEventListener("keyup", (e) => {submenuControl(e, el)});
 
         }else{
             menu.classList.add('nodisplay');
@@ -108,17 +107,32 @@
 
     function submenuControl(e, parentElement){
         const keyName = e.key.toLowerCase();
+        const el = e.target;
+        const activeElement = document.activeElement.tagName.toLowerCase();
         const menu = parentElement.querySelector('menu');
-        if(keyName === 'escape'){
+        if(keyName === 'escape' && menu.getAttribute('aria-hidden') != 'true'){
             doToggleMenu(parentElement, '')
         }
         if(keyName === 'arrowdown'){
-            console.log("ARROW DOWN")
-            menu.dispatchEvent(new KeyboardEvent('keypress', {key:'Tab'}))
+            if(activeElement === 'button'){
+                menu.querySelectorAll('li').item(0).querySelector('a').focus();
+            }else if(activeElement === 'a'){
+                const nextSibling = document.activeElement.parentElement.nextElementSibling;
+                if(nextSibling){
+                    nextSibling.querySelector('a').focus();
+                }
+            }
         }
         if(keyName === 'arrowup'){
-            console.log("ARROW UP")
-            menu.dispatchEvent(new KeyboardEvent('keypress', {key:'Tab', shiftKey:true}))
+            if(activeElement === 'a'){
+                const prevSibling = document.activeElement.parentElement.previousElementSibling;
+                if(prevSibling){
+                    prevSibling.querySelector('a').focus();
+                }else{
+                    console.log("BACK TO BUTTON", el)
+                    parentElement.querySelector('button').focus();
+                }
+            }
         }
     }
 
