@@ -67,10 +67,39 @@
                 <li><a href="/academics/online">Online Learning</a></li>
             </menu>
         </li>
-        <li><a href="/admissions">Admissions</a></li>
-        <li><a href="/research">Research</a></li>
-        <li><a href="/alumni">Alumni</a></li>
-        <li><a href="/contact">Contact Us</a></li>
+        <li class="has-submenu">
+            <a href="/admissions">Admissions</a>
+            <menu aria-hidden="true" aria-expanded="false" class="navmenu level1 nodisplay">
+                <li><a href="/admissions/application">Application</a></li>
+                <li><a href="/admissions/tuition">Tuition and Fees</a></li>
+                <li><a href="/admissions/Financial Aid"></a></li>
+                <li><a href="/admissions/visit">Visit Us</a></li>
+            </menu>
+        </li>
+        <li class="has-submenu">
+            <a href="/research">Research</a>
+            <menu aria-hidden="true" aria-expanded="false" class="navmenu level1 nodisplay">
+                <li><a href="/research/labs">Labs and Facilities</a></li>
+                <li><a href="/research/projects">Current Projects</a></li>
+                <li><a href="/research/grants">Research Grants</a></li>
+            </menu>
+        </li>
+        <li class="has-submenu">
+            <a href="/alumni">Alumni</a>
+            <menu aria-hidden="true" aria-expanded="false" class="navmenu level1 nodisplay">
+                <li><a href="alumni/assoc">Alumni Association</a></li>
+                <li><a href="alumni/events">Events</a></li>
+                <li><a href="alumni/directory">Directory</a></li>
+            </menu>
+        </li>
+        <li class="has-submenu">
+            <a href="/contact">Contact Us</a>
+            <menu aria-hidden="true" aria-expanded="false" class="navmenu level1 nodisplay">
+                <li><a href="/contact/campusmap">Campus Map</a></li>
+                <li><a href="/contact/faculty">Faculty Directory</a></li>
+                <li><a href="/contact/contactform">Contact Form</a></li>
+            </menu>
+        </li>
     </menu>
 </nav>
 
@@ -82,7 +111,7 @@
         const button = item.querySelector('button.expander');
         anchor.addEventListener('mouseover', toggleMenu);
         anchor.addEventListener('mouseout', toggleMenu);
-        button.addEventListener('click', toggleMenu);
+        // button.addEventListener('click', toggleMenu);
     })
 
     function toggleMenu(e){
@@ -100,10 +129,10 @@
 
         if(hidden){
             menu.classList.remove('nodisplay');
-            button.classList.add('opened');
+            // button.classList.add('opened');
         }else{
             menu.classList.add('nodisplay');
-            button.classList.remove('opened');
+            // button.classList.remove('opened');
         }
     }
 
