@@ -49,9 +49,9 @@
 <nav aria-label="Main Navigation">
     <menu class="navmenu level0">
         <li><a href="/">Home</a></li>
-        <li class="has-submenu" aria-description="has-submenu">
-            <a href="/about" class="submenu" aria-haspopup="true">About Us</a>
-            <button class="expander" aria-expanded="false">&#10148;</button>
+        <li class="has-submenu">
+            <a href="/about" class="submenu">About Us</a>
+            <!-- <button class="expander" aria-expanded="false">&#10148;</button> -->
             <menu aria-hidden="true" aria-expanded="false" class="navmenu level1 nodisplay">
                 <li><a href="/about/history">History</a></li>
                 <li><a href="/about/leadership">Leadership</a></li>
@@ -59,7 +59,14 @@
                 <li><a href="/about/accreditation">Accredication</a></li>
             </menu>
         </li>
-        <li><a href="/academics">Academics</a></li>
+        <li class="has-submenu">
+            <a href="/academics" class="submenu">Academics</a>
+            <menu aria-hidden="true" aria-expanded="false" class="navmenu level1 nodisplay">
+                <li><a href="/academics/undergraduate">Undergraduate Programs</a></li>
+                <li><a href="/academics/graduate">Graduate Programs</a></li>
+                <li><a href="/academics/online">Online Learning</a></li>
+            </menu>
+        </li>
         <li><a href="/admissions">Admissions</a></li>
         <li><a href="/research">Research</a></li>
         <li><a href="/alumni">Alumni</a></li>
