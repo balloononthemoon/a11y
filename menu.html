@@ -68,7 +68,6 @@
 </nav>
 
 <script type="text/javascript">
-    console.log("HELLO")
     const submenus = document.querySelectorAll('.has-submenu');
     submenus.forEach((item) => {
         const anchor = item.querySelector("& > a");
@@ -78,16 +77,19 @@
         button.addEventListener('click', toggleMenu);
     })
 
-    function toggleMenu(e){
+    function toggleMenu(e) {
         const el = e.target.parentElement;
+        doToggleMenu(el, e.type);
+    }
+
+    function doToggleMenu(el, eventType){
         const menu = el.querySelector('menu');
         const button = el.querySelector('button.expander');
 
         const hidden = menu.getAttribute('aria-hidden') == 'true';
-        if(e.type === 'mouseover' && !hidden){
+        if(eventType === 'mouseover' && !hidden){
             return;
         }
-        console.log("TOGGLE MENU", e.type, hidden);
         menu.setAttribute('aria-hidden', menu.getAttribute('aria-hidden') == 'true' ? false:true)
         menu.setAttribute('aria-expanded', menu.getAttribute('aria-expanded') == 'true' ? false:true)
         button.setAttribute('aria-expanded', button.getAttribute('aria-expanded') == 'true' ? false:true)
@@ -95,9 +97,28 @@
         if(hidden){
             menu.classList.remove('nodisplay');
             button.classList.add('opened');
+            menu.querySelector('li').focus();
+            document.addEventListener("keyup", (e) => {submenuControl(e, el)});
+
         }else{
             menu.classList.add('nodisplay');
             button.classList.remove('opened');
+        }
+    }
+
+    function submenuControl(e, parentElement){
+        const keyName = e.key.toLowerCase();
+        const menu = parentElement.querySelector('menu');
+        if(keyName === 'escape'){
+            doToggleMenu(parentElement, '')
+        }
+        if(keyName === 'arrowdown'){
+            console.log("ARROW DOWN")
+            menu.dispatchEvent(new KeyboardEvent('keypress', {key:'Tab'}))
+        }
+        if(keyName === 'arrowup'){
+            console.log("ARROW UP")
+            menu.dispatchEvent(new KeyboardEvent('keypress', {key:'Tab', shiftKey:true}))
         }
     }
 
