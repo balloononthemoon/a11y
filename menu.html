@@ -20,14 +20,16 @@
 
     menu.level0 > li{
         display: flex;
-        justify-content: center;
+        justify-content: left;
         position: relative;
+        display: flex;
+        flex-flow: row;
+        flex-wrap: wrap;
     }
     menu.level1{
         display: block;
-        position: absolute;
-        top: 25px;
-        left: 10px;
+        flex-basis: 100%;
+        width:20px;
     }
 
     li{
@@ -52,7 +54,7 @@
         <li class="has-submenu" aria-description="has-submenu">
             <a id="about-us-link" href="/about" class="submenu">About Us</a>
             <button class="expander" aria-expanded="false" aria-controls="about-submenu" aria-labelledby="about-us-link" tabindex="0">&#10148;</button>
-            <menu id="about-submenu" aria-hidden="true" class="navmenu level1 nodisplay">
+            <menu id="about-submenu" aria-hidden="true" class="navmenu level1">
                 <li><a href="/about/history">History</a></li>
                 <li><a href="/about/leadership">Leadership</a></li>
                 <li><a href="/about/mission">Mission & Values</a></li>
@@ -72,25 +74,34 @@
     submenus.forEach((item) => {
         const anchor = item.querySelector("& > a");
         const button = item.querySelector('button.expander');
-        anchor.addEventListener('mouseover', toggleMenu);
-        anchor.addEventListener('mouseout', toggleMenu);
+        const menuContainer = anchor.parentElement;
+        // item.addEventListener('mouseover', toggleMenu);
+        // item.addEventListener('mouseleave', toggleMenu);
         button.addEventListener('click', toggleMenu);
         document.addEventListener("keyup", (e) => {submenuControl(e, item)});
     })
+
+    function showMenu(e){
+
+    }
 
     function toggleMenu(e) {
         const el = e.target.parentElement;
         doToggleMenu(el, e.type);
     }
 
-    function doToggleMenu(el, eventType){
-        const menu = el.querySelector('menu');
-        const button = el.querySelector('button.expander');
-
-        const hidden = menu.getAttribute('aria-hidden') == 'true';
+    function doToggleMenu(menuContainer, eventType){
+        const menu = menuContainer.querySelector('menu');
+        const hidden = menu ? menu.getAttribute('aria-hidden') == 'true' : true;
         if(eventType === 'mouseover' && !hidden){
             return;
         }
+
+        console.log("EVENT", eventType);
+        console.log("MENU CONTAINER", menuContainer);
+        console.log("MENU", menu);
+        const button = menuContainer.querySelector('button.expander');
+
         menu.setAttribute('aria-hidden', menu.getAttribute('aria-hidden') == 'true' ? false:true)
         menu.setAttribute('aria-expanded', menu.getAttribute('aria-expanded') == 'true' ? false:true)
         button.setAttribute('aria-expanded', button.getAttribute('aria-expanded') == 'true' ? false:true)
