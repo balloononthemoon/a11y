@@ -22,7 +22,6 @@
         display: flex;
         justify-content: left;
         position: relative;
-        display: flex;
         flex-flow: row;
         flex-wrap: wrap;
     }
@@ -75,8 +74,8 @@
         const anchor = item.querySelector("& > a");
         const button = item.querySelector('button.expander');
         const menuContainer = anchor.parentElement;
-        // item.addEventListener('mouseover', toggleMenu);
-        // item.addEventListener('mouseleave', toggleMenu);
+        item.addEventListener('mouseover', toggleMenu);
+        item.addEventListener('mouseleave', toggleMenu);
         button.addEventListener('click', toggleMenu);
         document.addEventListener("keyup", (e) => {submenuControl(e, item)});
     })
