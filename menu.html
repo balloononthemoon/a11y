@@ -22,12 +22,14 @@
         display: flex;
         justify-content: center;
         position: relative;
+        height:25px;
+        line-height:25px;
     }
     menu.level1{
         display: block;
         position: absolute;
-        top: 25px;
-        left: 10px;
+        top: 24px;
+        left: 0px;
     }
 
     li{
@@ -72,8 +74,11 @@
     submenus.forEach((item) => {
         const anchor = item.querySelector("& > a");
         const button = item.querySelector('button.expander');
+        const submenu = item.querySelector('menu');
         anchor.addEventListener('mouseover', toggleMenu);
-        anchor.addEventListener('mouseout', toggleMenu);
+        submenu.addEventListener('mouseover', toggleMenu);
+        anchor.addEventListener('mouseleave', toggleMenu);
+        submenu.addEventListener('mouseleave', toggleMenu);
         button.addEventListener('click', toggleMenu);
         document.addEventListener("keyup", (e) => {submenuControl(e, item)});
     })
